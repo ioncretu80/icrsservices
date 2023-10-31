@@ -1,4 +1,4 @@
-package com.icrcode.clients;
+package com.icrcode.clients.fraud;
 
 public record FraudCheckResponse(Boolean isFraudster) {
 

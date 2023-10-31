@@ -1,4 +1,4 @@
-package com.icrcode.clients;
+package com.icrcode.clients.fraud;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
