@@ -5,7 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class MainController {
-  @GetMapping()
+  @GetMapping("main")
   String getMain(Model model){
     return "main";
   }

@@ -1,5 +1,8 @@
 package com.icrcode.customer;
 
+
+import com.icrcode.clients.FraudCheckResponse;
+import com.icrcode.clients.FraudClient;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -10,6 +13,7 @@ public class CustomerService {
   private final CustomerRepository customerRepository;
 
   private final RestTemplate restTemplate;
+  private final FraudClient fraudClient;
 
 
   public void registerCustomer(CustomerRequest customerRequest){
@@ -23,22 +27,27 @@ public class CustomerService {
 
     customerRepository.saveAndFlush(customer);
 
-    FraudCheckResponse fraudCheckResponse;
-    try{
-      fraudCheckResponse = restTemplate.getForObject(
-          "http://localhost:8081/api/v1/fraud-check/{customerId}",
-          FraudCheckResponse.class,
-          customer.getId());
+//    FraudCheckResponse fraudCheckResponse;
+//    try{
+//      fraudCheckResponse = restTemplate.getForObject(
+//          "http://localhost:8081/api/v1/fraud-check/{customerId}",
+//          FraudCheckResponse.class,
+//          customer.getId());
+//      if(Boolean.TRUE.equals(fraudCheckResponse.isFraudster())){
+//        throw new IllegalStateException("fraudster");
+//      }
+//
+//    }catch (NullPointerException e){
+//      e.printStackTrace();
+//    }
 
-      if(Boolean.TRUE.equals(fraudCheckResponse.isFraudster())){
-        throw new IllegalStateException("fraudster");
-      }
+    FraudCheckResponse fraudResponse =
+        fraudClient.isFraudster(customer.getId());
 
-    }catch (NullPointerException e){
-      e.printStackTrace();
+    if (fraudResponse.isFraudster()){
+      throw new IllegalStateException("fraudster");
     }
-
-
+  //todo: send notification
 
   }
 }

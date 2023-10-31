@@ -7,5 +7,7 @@ public interface ArticleService {
   List<Article> findAllArticles();
 
 
+  Article findById(Integer theId);
 
+  public void deleteById(Integer theId);
 }

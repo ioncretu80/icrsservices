@@ -1,6 +1,6 @@
 package com.icrcode.nomenclature.model;
 
 
-public record ArticleRequest(String name, String producer, String category) {
+public record ArticleRequest(int id,String name, String producer, String category) {
 
 }
